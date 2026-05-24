@@ -1,0 +1,15 @@
+% acronyms.tex — all abbreviation definitions (the LaTeX equivalent of #make).
+% This file is \input in the PREAMBLE of main.tex (\DeclareAcronym must be
+% declared before \begin{document}).
+%
+% Basic form:      \DeclareAcronym{KEY}{short=KEY, long=Long form}
+% Irregular plural:\DeclareAcronym{KEY}{short=KEY, long=..., long-plural=...}
+% Alternate def:   add  ", alt-long=Alternative wording"  (see VIL example)
+
+\DeclareAcronym{LKA}{short = LKA,  long = Lane Keeping Assist}
+\DeclareAcronym{RMSE}{short = RMSE, long = root-mean-square cross-track error}
+\DeclareAcronym{AV}{short = AV,   long = Autonomous Vehicle}
+\DeclareAcronym{MIL}{short = MIL,  long = Model-in-the-Loop}
+\DeclareAcronym{VIL}{short = VIL,  long = Vehicle-in-the-Loop}
+\DeclareAcronym{SIL}{short = SIL,  long = Software-in-the-Loop}
+\DeclareAcronym{HIL}{short = HIL,  long = Hardware-in-the-Loop}

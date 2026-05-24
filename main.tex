@@ -3,29 +3,39 @@
 \usepackage[sorting=none]{biblatex} % Imports biblatex package
 \addbibresource{refs.bib} % Import the bibliography file
 \usepackage[T1]{fontenc} % Output font encoding for international characters
-\usepackage[unicode]{hyperref}
+\usepackage[unicode, pdfborder={0 0 0}]{hyperref}
 \usepackage[english]{babel}
-\usepackage[left=2.50cm, right=2.50cm, top=2.50cm, bottom=2.50cm]{geometry}\usepackage{graphicx}
+\usepackage[left=2.50cm, right=2.50cm, top=2.50cm, bottom=2.50cm]{geometry}
+\usepackage{graphicx}
 \usepackage{comment}
+\usepackage{wrapfig}
 \usepackage{setspace}
+\usepackage[final,nopatch=footnote]{microtype}
 \graphicspath{ {image/} }
 \usepackage[section]{placeins}
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{tabularx}
-\usepackage{algorithm} 
+\usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{titlesec}
 \usepackage{amsmath}
-\usepackage{multirow}
 \usepackage{csquotes}
+
+% ---------- Abbreviations / acronyms (acro) ----------
+\usepackage{acro}
+\acsetup{make-links = true}   % short forms link to the abbreviations list
+\input{acronyms}              % all \DeclareAcronym definitions
 
 \titleformat{\chapter}[display]
 {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 
 \date{\today}
 
+%==============================================================
 \begin{document}
+
+% ----------------------------- TITLE PAGE -----------------------------
 \begin{titlepage}
 \begin{center}
 
@@ -47,126 +57,44 @@
 {\normalsize  Thesis, \\\large \today}\\[0.5cm]
 
 \end{center}
-\end{titlepage}   
+\end{titlepage}
 \newpage
-\pagenumbering{gobble}
+\pagenumbering{arabic}
 
 %% Extra page for marking sources, for example:
 %\begin{center}
 %{\vspace{5cm}\large \bfseries EFOP-3.6.3-VEKOP-16-2017-00001:}\vspace{5cm}\\
-
 %EFOP-3.6.3-VEKOP-16-2017-00001: Talent development and research support in the field of autonomous vehicle control technologies - The project was implemented with the support of the Hungarian State and co-financed by the European Union, with co-financing from the European Social Fund.
 %\end{center}
 
+% ----------------------------- FRONT MATTER -----------------------------
 \tableofcontents
-\begin{abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut quam odio, ultrices vitae ornare aliquam, lacinia id ligula. Aliquam accumsan dictum arcu non consequat. Aliquam fringilla nulla nibh, feugiat auctor sem hendrerit eget. Integer efficitur nulla et venenatis cursus. Vivamus vel sem nunc. Sed erat ex, pulvinar at sapien sed, lacinia bibendum nunc. Nam tincidunt quam a lacinia tempus. Fusce eget rutrum purus. Ut malesuada consectetur ex, a blandit velit viverra non. Nam sit amet luctus quam. Praesent eu dolor blandit, dignissim lorem non, bibendum urna. Maecenas condimentum enim ut tortor venenatis, ac cursus nunc rutrum. Aliquam ipsum risus, varius ac consectetur vulputate, tristique non odio. Quisque a tristique neque, quis malesuada nunc.
 
-Donec sed sem ac magna tristique venenatis porttitor ut nunc. Etiam convallis nec tortor nec posuere. Nullam a volutpat urna. Nullam dui risus, tincidunt sit amet maximus nec, semper eget lectus. Suspendisse vel hendrerit erat, tempor dapibus.
+% Front-matter pieces kept in their own files
+\input{abstract}        % abstract.tex
+\input{abbreviations}   % abbreviations.tex
 
-\end{abstract}
+% ----------------------------- CHAPTERS -----------------------------
+% Each \include mirrors one #include "chapterX.typ" from your Typst main.
+% \include starts every chapter on a new page (standard for theses) and
+% lets you use \includeonly{...} to compile a single chapter while drafting.
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
 
-\section*{Abbreviations}
-In practice, it is often advisable to clarify the abbreviations used in the thesis. This can be done locally or in a dedicated chapter. 
-\begin{tabbing}
-    V2V \hspace{3em} \= - \hspace{3em} \= Vehicle to Vehicle
-    \\  AI\> - \> Artificial Intelligence
-    \\  LIDAR\> - \>Light Detection and Ranging 
-    \\  UE4\> - \> Unreal Engine 4
-    \\  TTC\> - \> Time To Collision
-    \\  TTR\> - \>Time To React
-\end{tabbing}
-
-\chapter{Introduction}
-(page content) This document serves as a template for students preparing a thesis or dissertation at the Department of Control for Transportation and Vehicle Systems at BME. The use of built-in styles is recommended! This includes pre-defined styles for chapter titles, captions for images and tables, and the bibliography format. If you deviate from the built-in styles, please follow the provided guidelines.
-
-\begin{itemize}
-    \item The main text of the thesis is handled by LaTeX. The spacing before and after paragraphs follows the specified formatting. The text is justified by default. Only deviate from these settings when necessary. Line spacing is also pre-set.
-    \item Chapter titles are formatted with the command "\ chapter\{\}". The font size is larger than the main text. Chapters should always start on a new page (preferably an odd-numbered page when printing on both sides). You can use "\ newpage" to help with this.
-    \item Subsequent subchapters ("\ section, subsection, subsubsection, paragraph") should follow continuously.
-    \item Page numbering is centered at the bottom of the pages and should start from the table of contents (this is the default in the template).
-    \item The header may contain the title of the thesis or the titles of individual chapters.
-\end{itemize}
-
-\section{Figures}
-Figures should be placed within the text. Beneath each figure, the figure number, title, and source should be centered. If the source is only a reference (e.g., \cite{maurer-2016}), it can be on the same line as the figure title. Do not explicitly mark self-created content (!), but do indicate any other sources. 
-For example:
-\begin{figure}
-    \centering
-    \includegraphics[width=0.2\textwidth]{image/devops.png}
-    \caption{This is a figure placed by \LaTeX into the flow of text.}
-    \label{fig:devops_image}
-\end{figure}
-
-In LaTeX, if you want to place the figure in a specific location (not like \ref{fig:devops_image}), use the [h] specifier. For example:
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{image/devops.png}
-    \caption{This way, the compiler will try to place it where it is in the text. }
-    \label{fig:devops_image2}
-\end{figure}
-
-\section{Tables}
-Tables should also be placed within the text, with the table number, title, and source centered above the table, similar to figures. Reference the tables in the flowing text (see Table \ref{tab:pelda}).
-If using \texttt{aref} in Hungarian, it will insert "a(z)" when cross-referencing. If you prefer not to use it, you can use the standard \texttt{ref}.
-Table editing can be done manually, but it is recommended to use \href{https://www.tablesgenerator.com/latex_tables#}{tablegenerator}.
-
-\begin{table}
-    \centering
-    \begin{tabular}{c|c}
-       a  & 1 \\
-        b & 2
-    \end{tabular}
-    \caption{An example table.}
-    \label{tab:pelda}
-\end{table}
-
-\section{Structure}
-The recommended structure of the thesis is as follows:
-
-\begin{itemize}
-    \item Introduction (describe why the student chose the topic, what technical requirements or personal reasons motivated the topic selection).
-    \item Chapters dealing with the current state of the field and necessary theoretical topics.
-    \item Chapters discussing the individual work.
-    \item A brief summary section follows, summarizing the achieved results.
-    \item Bibliography (mandatory), listing the literature used in the exact format. For books, include the author, title, publisher, and publication year. For journal articles, include the author, article title, journal title, volume, issue, and page numbers. For online sources, include the author, title, method of finding (e.g., URL), and the download date.
-\end{itemize}
-
-Chapters should begin with a brief "introduction" that outlines the content of the chapter. A short summary at the end of each chapter may also be useful. Reference individual literature sources where used.
-
-At the end of the thesis, in the appendix, you can include source code snippets, catalog pages, etc., necessary for understanding the thesis. Lengthy source codes (e.g., hundreds of pages) should not unnecessarily increase the apparent length of the thesis. It is recommended to upload the project to an online version control system (e.g., GitHub) and provide the link in the thesis.
-
-\chapter{References}
-\section{Literature References}
-In the main text, references to external sources are indicated by square brackets and numbered according to the numerical referencing method, e.g., [2]. Literal quotes must be marked with quotation marks.
-Sources should be added to the sample.bib file. The Mendeley Web extension is recommended for managing references in the appropriate format. For example, see \cite{maurer-2016}.
-
-\section{Cross-References within the Text} \label{sec:kereszthivatkozas}
-In LaTeX, it is standard to label each figure, table, chapter, and section, enabling cross-referencing throughout the document. For example, see Section \ref{sec:kereszthivatkozas}. LaTeX automatically updates all references and numbering. Ensure that the caption precedes the label in tables and figures; otherwise, the reference won't work.
-
-\section{Equations}
-Mathematical formulas in the thesis should be enclosed in right-closed parentheses and have the same font size as the main text, with continuous numbering. LaTeX provides three types of equations: inline, unnumbered displayed equations (double dollar signs), and numbered displayed equations.
-
-For inline equations, use the dollar sign symbol, e.g., $x=5y-1$. For unnumbered displayed equations, use double dollar signs or \texttt{equation*} environment:
-\[
-\sum_{i=0}^{100} a^{10i}
-\]
-For numbered displayed equations, use \texttt{equation} environment:
-\begin{equation}
-    x_{1,2} = \frac{-b \pm \sqrt{b^2-4ac}}{2a}
-    \label{eq:pelda}
-\end{equation}
-
-Underscores and exponentials only apply to the first character, unless parentheses are used. See \eqref{eq:pelda} for an example. LaTeX handles this automatically.
-
-\printbibliography %Prints bibliography
-
+% ----------------------------- BACK MATTER -----------------------------
+\printbibliography  % Prints bibliography
 \listoffigures % List of figures
-
 \listoftables % List of tables
 
 \appendix
 \chapter{Appendix Title}
 At the end of the thesis, appendices can be used to include code snippets, catalog pages, large images, etc. This is referenced as 1. appendix in the text. It is recommended to use an online version control system (e.g., GitHub) to publicly upload the project and provide the link in the thesis.
-\chapter{Appendix Title}
+
+% Syntax cheat-sheet (figures, tables, equations, citations) is parked here,
+% not part of the printed thesis. Uncomment to render it while learning:
+% \input{chapters/latex_reference}
+
 \end{document}
