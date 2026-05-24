@@ -8,3 +8,7 @@ main.out
 main.lot
 main.log
 main.lof
+main.bbl
+main.blg
+main.fdb_latexmk
+main.fls
