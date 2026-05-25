@@ -29,15 +29,36 @@
 \usepackage{array}
 \usepackage{float}
 \usepackage{listings}
+\usepackage{xcolor}
+
+% VS Code "Light+" palette
+\definecolor{vlBg}{HTML}{F8F8F8}
+\definecolor{vlFg}{HTML}{1F1F1F}
+\definecolor{vlKw}{HTML}{0000FF}
+\definecolor{vlStr}{HTML}{A31515}
+\definecolor{vlCom}{HTML}{008000}
+\definecolor{vlConst}{HTML}{0070C1}
+\definecolor{vlGutter}{HTML}{A0A0A0}
+\definecolor{vlRule}{HTML}{D0D0D0}
+
 \lstset{
-  basicstyle=\ttfamily\footnotesize,
-  breaklines=true,
-  breakatwhitespace=false,
-  columns=fullflexible,
-  keepspaces=true,
-  frame=single,
-  xleftmargin=1em, framexleftmargin=1em,
-  showstringspaces=false
+  basicstyle=\ttfamily\footnotesize\color{vlFg},
+  backgroundcolor=\color{vlBg},
+  keywordstyle=\color{vlKw}\bfseries,
+  stringstyle=\color{vlStr},
+  commentstyle=\color{vlCom}\itshape,
+  identifierstyle=\color{vlFg},
+  numberstyle=\ttfamily\tiny\color{vlGutter},
+  emph={self,True,False,None},emphstyle=\color{vlConst},
+  numbers=left,numbersep=10pt,
+  breaklines=true,breakatwhitespace=false,
+  postbreak=\mbox{\textcolor{vlGutter}{$\hookrightarrow$}\space},
+  columns=fullflexible,keepspaces=true,
+  frame=single,rulecolor=\color{vlRule},
+  framexleftmargin=6pt,framexrightmargin=6pt,
+  xleftmargin=14pt,xrightmargin=6pt,
+  aboveskip=1.2em,belowskip=1.2em,
+  showstringspaces=false,tabsize=4
 }
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
