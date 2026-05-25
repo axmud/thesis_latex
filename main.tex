@@ -1,6 +1,6 @@
 \documentclass[12pt, a4paper, titlepage, onehalfspacing]{report}
 \usepackage[utf8]{inputenc} % Characters, including Hungarian letters
-\usepackage[sorting=none]{biblatex} % Imports biblatex package
+\usepackage[sorting=none, backend=biber]{biblatex} % Imports biblatex package
 \addbibresource{refs.bib} % Import the bibliography file
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage[unicode, pdfborder={0 0 0}]{hyperref}
@@ -20,7 +20,15 @@
 \usepackage{algpseudocode}
 \usepackage{titlesec}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{csquotes}
+\usepackage{microtype}
+\usepackage{hyphenat}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
 % ---------- Abbreviations / acronyms (acro) ----------
 \usepackage{acro}
@@ -85,7 +93,9 @@
 \include{chapters/chapter5}
 
 % ----------------------------- BACK MATTER -----------------------------
+\begin{sloppypar}
 \printbibliography  % Prints bibliography
+\end{sloppypar}
 \listoffigures % List of figures
 \listoftables % List of tables
 
