@@ -36,16 +36,14 @@ The lateral-control function has been implemented in three increasingly sophisti
 
 The three architectures are sketched side by side in Figure~\ref{fig:three_arch}. They share the same actuator (the \texttt{carla.VehicleControl.steer} field), the same simulation rate ($T_s = 0.05$~s), the same vehicle dynamics, and---crucially---the same lateral plant up to the choice of the error signal. The differences between them are confined to two well-defined components: the way the lateral error is constructed, and the structure of the PID controller that consumes it. This modular separation makes it possible to compare the three approaches on equal footing, and to attribute the observed differences in behavior to specific design choices rather than to incidental implementation details.
 
-\begin{figure}[htbp]
+\section{The Kinematic Bicycle Model Revisited}
+\label{sec:bicycle}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{image/three_architectures.jpeg}
+    \includegraphics[width=\textwidth]{image/three_architectures.jpeg}
     \caption{Block-diagram comparison of the three lateral-control architectures investigated in this thesis. The first one closes the loop on the cross-track distance computed against a recorded path; the second one closes the loop on a heading angle derived from a speed-dependent look-ahead point; the third one replaces the recorded path with a perception pipeline that reconstructs the center line of the lane from the camera image. All three architectures share the same actuator, the same vehicle dynamics, and the same PID structure.}
     \label{fig:three_arch}
 \end{figure}
-
-\section{The Kinematic Bicycle Model Revisited}
-\label{sec:bicycle}
-
 The kinematic bicycle model introduced in Chapter~\ref{ch2} is the simplest description of the planar motion of a four-wheeled vehicle. It collapses the front pair of wheels into a single equivalent wheel placed at the front axle, and similarly for the rear pair, and ignores tire slip. Under these assumptions the configuration of the vehicle is fully described by three quantities: the position $(x, y)$ of a reference point---conventionally taken at the center of the rear axle---and the yaw angle $\psi$ that the body of the vehicle makes with the world $x$-axis. The configuration space is therefore $\mathbb{R}^2 \times S^1$, and a useful sketch of its variables is given in Figure~\ref{fig:bicycle}.
 
 \begin{figure}[htbp]
@@ -89,14 +87,17 @@ Each term plays a specific role in the \ac{LKA} context. The proportional term $
 \begin{table}[htbp]
     \centering
     \footnotesize
-    \begin{tabular}{@{}lllll@{}}
-        \hline
-        Gain & Rise time & Overshoot & Settling time & Steady-state error \\
-        \hline
+    % Changed alignment: 'l' for the first column, 'c' (centered) for the rest
+    \begin{tabular}{@{} l cccc @{}}
+        \toprule
+        \textbf{Gain} & \textbf{Rise time} & \textbf{Overshoot} & \textbf{Settling time} & \textbf{Steady-state error} \\
+        \midrule
         Increase $K_p$ & decreases    & increases & small change & decreases   \\
+        \addlinespace
         Increase $K_i$ & decreases    & increases & increases    & eliminates  \\
+        \addlinespace
         Increase $K_d$ & small change & decreases & decreases    & no effect   \\
-        \hline
+        \bottomrule
     \end{tabular}
     \caption{Qualitative effect of each PID gain on the closed-loop response of a generic plant.}
     \label{tab:pid_effects}
@@ -177,14 +178,14 @@ The second architecture replaces the cross-track distance with a different scala
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\textwidth]{image/heading_error_geometry.jpeg}
+    \includegraphics[width=\linewidth]{image/heading_error_geometry.jpeg}
     \caption{Heading-error / look-ahead geometry. The look-ahead point $P_{\mathrm{la}}$ is the closest waypoint on the reference path at distance at least $L_d$ ahead of the vehicle; the heading error $\alpha$ is the signed angle between the vehicle forward unit vector $\hat{f}_v$ and the line $P_v \rightarrow P_{\mathrm{la}}$. The look-ahead distance is scheduled as $L_d = L_d^{\mathrm{min}} + k_L v(t)$.}
     \label{fig:heading_geom}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\textwidth]{image/plant_comparison.jpeg}
+    \includegraphics[width=0.9\linewidth]{image/plant_comparison.jpeg}
     \caption{Block-diagram comparison of the cross-track and heading-error plants. The cross-track formulation contains two integrators---yaw rate to heading, and lateral velocity to cross-track distance---while the heading-error formulation contains only one. The reduction in plant order is the reason why a PI controller is sufficient for the heading-error case, while a full PID is required for the cross-track case.}
     \label{fig:plant_block}
 \end{figure}
@@ -260,17 +261,18 @@ The second experiment identifies the steering gain $K_{\mathrm{steer}}$. The veh
     K_{\mathrm{steer}} = \frac{\dot{\psi}_{\mathrm{ss}} L}{V \delta_c}
 \end{equation}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=1\textwidth]{image/analytical_comparison.png}
-    \caption{Analytical comparison of the cross-track PID and heading-error PI controllers, computed symbolically from the identified plant parameters. \emph{Top}: open-loop magnitude and phase. \emph{Bottom-left}: closed-loop step response. \emph{Bottom-right}: proportional gain as a function of vehicle speed, normalized at $30$~km/h. The gentler $1/v$ scaling of the heading-error gain, compared with the $1/v^2$ scaling of the cross-track gain, is the main reason why the heading-error formulation is preferred in the operational range of an \acs{LKA} function.}
-    \label{fig:analytic_cmp}
-\end{figure}
-
 The duration of the lateral step is kept deliberately short, because once the vehicle starts to drift laterally the cross-track error grows quickly and the small-angle assumptions of the bicycle model are no longer satisfied.
 
 \subsection{Analytical Plot Comparison}
 With $L$ and $K_{\mathrm{steer}}$ identified, the analytical gains of Equation~\eqref{eq:xtrack_gains} and Equation~\eqref{eq:heading_gains} can be evaluated and the resulting closed-loop transfer functions can be analyzed without running the simulator. Figure~\ref{fig:analytic_cmp} shows the four canonical control plots that the tuning script \texttt{pid\_tuning.py} produces from the identified plant parameters: the open-loop magnitude and phase of the loop transfer $L(s) = C(s) G(s)$ for the two formulations (top row), the closed-loop step response of the reference-to-output transfer $T(s)$ (bottom-left), and the speed dependence of the proportional gain $K_p$ (bottom-right).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{image/analytical_comparison.png}
+    \caption{Analytical comparison of the cross-track PID and heading-error PI controllers, computed symbolically from the identified plant parameters. \emph{Top}: open-loop magnitude and phase. \emph{Bottom-left}: closed-loop step response. \emph{Bottom-right}: proportional gain as a function of vehicle speed, normalized at $30$~km/h. The gentler $1/v$ scaling of the heading-error gain, compared with the $1/v^2$ scaling of the cross-track gain, is the main reason why the heading-error formulation is preferred in the operational range of an \acs{LKA} function.}
+    \label{fig:analytic_cmp}
+\end{figure}
+
 
 Several observations can be made from these plots. The two open-loop magnitudes coincide above $\omega \approx 4$~rad/s---at high frequency, both loops are dominated by the fastest pole of the controller---while at low frequency the cross-track loop has a steeper slope that reflects the additional integrator. The phase of the cross-track loop reaches $-180^\circ$ around the same frequency at which the heading-error loop is still well above $-90^\circ$, which translates into a smaller phase margin and a more oscillatory step response. Both controllers track a unit step, but the cross-track design exhibits a larger overshoot and a longer settling time, even though its bandwidth $\omega_n$ has been deliberately set lower than that of the heading-error controller to compensate for the additional plant order.
 
@@ -321,7 +323,7 @@ The three architectures presented in this chapter solve the same lane-keeping pr
     \centering
     \footnotesize
     % tabularx uses \textwidth to span the whole page, and 'L' for our custom columns
-    \begin{tabularx}{\textwidth}{@{} LLLL @{}}
+    \begin{tabularx}{\textwidth}{@{} Lccc @{}}
         \toprule
         \textbf{Property} & \textbf{Cross-track PID} & \textbf{Heading-error PI} & \textbf{Vision-based PI} \\
         \midrule

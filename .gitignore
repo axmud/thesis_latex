@@ -17,3 +17,6 @@ chapters/chapter4.aux
 chapters/chapter5.aux
 chapters/chapter3.aux
 chapters/chapter1.aux
+main.synctex(busy)
+.gitignore
+main-blx.bib
