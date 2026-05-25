@@ -20,3 +20,6 @@ chapters/chapter1.aux
 main.synctex(busy)
 .gitignore
 main-blx.bib
+Appendix A.aux
+.gitignore
+.aux

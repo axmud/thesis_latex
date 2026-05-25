@@ -28,7 +28,17 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{float}
-
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  keepspaces=true,
+  frame=single,
+  xleftmargin=1em, framexleftmargin=1em,
+  showstringspaces=false
+}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
 % ---------- Abbreviations / acronyms (acro) ----------
@@ -102,10 +112,6 @@
 
 \appendix
 \chapter{Appendix Title} \label{app:b}
-At the end of the thesis, appendices can be used to include code snippets, catalog pages, large images, etc. This is referenced as 1. appendix in the text. It is recommended to use an online version control system (e.g., GitHub) to publicly upload the project and provide the link in the thesis.
-
-% Syntax cheat-sheet (figures, tables, equations, citations) is parked here,
-% not part of the printed thesis. Uncomment to render it while learning:
-% \input{chapters/latex_reference}
+\include{Appendix A}
 
 \end{document}

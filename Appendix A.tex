@@ -1,0 +1,52 @@
+% chapters/Appendix_A.tex  — converted from Appendix_A.typ
+% Conventions used (identical to chapter1–5.tex):
+%   Typst = Title          -> \chapter{Title}     (inside \appendix in main.tex)
+%   Typst #list(...)        -> itemize
+%   Typst #raw(..., lang:"cmd", block:true) -> lstlisting code block
+%   Typst `code` / inline   -> \texttt{code}      (underscores etc. escaped)
+%
+% REQUIRES in the preamble of main.tex (add once, before \begin{document}):
+%   \usepackage{listings}
+%   \lstset{
+%     basicstyle=\ttfamily\footnotesize,
+%     breaklines=true,            % wrap long lines (the powershell line is 89 chars)
+%     breakatwhitespace=false,
+%     columns=fullflexible,
+%     keepspaces=true,
+%     frame=single,               % thin box around the listing
+%     xleftmargin=1em, framexleftmargin=1em,
+%     showstringspaces=false
+%   }
+% listings needs no external tools (unlike minted) and ships with every LaTeX
+% distribution, so this adds no build dependency.
+%
+% NOTE: This file is \include-d AFTER \appendix in main.tex, so the heading
+%       below is numbered "Appendix A" rather than "Chapter 6". If you want a
+%       \label to cross-reference it, add e.g. \label{app:a} after the title.
+
+\chapter{Carla and Pycharm IDE Interfacing}
+
+To control and communicate with Carla, the Python API is used. Therefore, it is necessary to have a Python version compatible with the Carla version we plan to use. However, updates to Carla often require updating the Python version at regular intervals. This makes it mandatory to reconcile Carla and Python with each new update. However, by taking advantage of \texttt{uv}'s ability to use different Python versions through different digital environments, we can solve this problem. Thus, we can have multiple environments and Carla models on the same computer, which also reduces the burden of this process. The steps for setting up Carla--uv communication are as follows:
+
+\begin{itemize}
+    \item Downloaded Carla 0.9.16 (UE4).
+    \item Installed Pycharm IDE.
+    \item Installed \texttt{uv} python package and project manager:
+\end{itemize}
+
+\begin{lstlisting}[language=bash]
+set PROJECT=LaneDetCarla
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/0.10.8/install.ps1 | iex"
+git clone https://github.com/axmud/LaneDetCarla.git %PROJECT%
+cd %PROJECT%
+uv venv
+.venv\Scripts\activate
+uv pip install setuptools==66.1.1
+uv pip install wheel==0.46.3
+uv pip install albumentations==0.4.6 --no-build-isolation
+uv sync --extra cu121
+uv pip install --no-build-isolation -e .
+uv pip install numpy==1.23.1
+uv pip install hydra-core==1.3.2
+uv pip install control==0.10.2
+\end{lstlisting}
