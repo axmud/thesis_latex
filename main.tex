@@ -67,6 +67,15 @@
 \acsetup{make-links = true}   % short forms link to the abbreviations list
 \input{acronyms}              % all \DeclareAcronym definitions
 
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\titlepage}{\setcounter{page}\@ne}{}     {}{\PackageError{titlepage}{failed to patch \string\begin{titlepage} to not reset the page counter}{}}
+\patchcmd{\endtitlepage}{\setcounter{page}\@ne}{}  {}{\PackageError{titlepage}{failed to patch \string\end{titlepage} to not reset the page counter}{}}
+% abstract wraps in titlepage which sets \thispagestyle{empty}; restore plain for abstract only
+\patchcmd{\abstract}{\thispagestyle{empty}}{\thispagestyle{plain}}{}{}
+\makeatother
+
 \titleformat{\chapter}[display]
 {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 

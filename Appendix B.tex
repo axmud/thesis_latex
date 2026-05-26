@@ -285,7 +285,7 @@ def pixel_to_vehicle(pixel_pts, cam_height,
     return pts[pts[:, 0] <= max_range]
 \end{lstlisting}
 
-The polynomial fit and look-ahead-target evaluation that follow the IPM step:
+The polynomial fit and look-ahead-target evaluation that follow the \acs{IPM} step:
 
 \begin{lstlisting}[language=Python]
 def vision_target(centerline_body, Ld, x_min=0.5, x_max=20.0, deg=1):

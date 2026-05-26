@@ -38,7 +38,7 @@ In today's world, developing and using software has become very important across
 \begin{figure}[htbp]
     \centering
     \includegraphics{image/v cycle development process.jpeg}
-    \caption{MIL, \acs{SIL}, PIL, \acs{HIL} and \acs{VIL} tests in the V-cycle development process~\cite{article}.}
+    \caption{\acs{MIL}, \acs{SIL}, PIL, \acs{HIL} and \acs{VIL} tests in the V-cycle development process~\cite{article}.}
     \label{fig:v_model}
 \end{figure}
 
@@ -127,7 +127,7 @@ The CARLA Simulator is an open-source autonomous driving platform~\cite{team-no-
 Using a set of predefined evaluation criteria---such as graphics quality, physics realism, sensor simulation, traffic modeling, and environmental variability---a comparative score was assigned to each simulator. Table~\ref{tab:simulators} summarizes the evaluation results based on these criteria.
 
 \section{ADAS Applications}
-Advanced Driver Assistance Systems (ADAS) are becoming increasingly common in today's vehicles. Developed to enhance vehicle safety and the driving experience, these systems utilize various technologies such as cameras, sensors, and radars to identify potential hazards and are designed to alert the driver or automatically control the vehicle under certain conditions. ADAS technologies not only assist drivers in traveling more safely and comfortably but also have the potential to reduce traffic accidents. There are various applications of ADAS, which are crucial for the safety of the driver and also provide significant conveniences. Some of these applications can be briefly discussed as follows:
+\ac{ADAS} are becoming increasingly common in today's vehicles. Developed to enhance vehicle safety and the driving experience, these systems utilize various technologies such as cameras, sensors, and radars to identify potential hazards and are designed to alert the driver or automatically control the vehicle under certain conditions. \acs{ADAS} technologies not only assist drivers in traveling more safely and comfortably but also have the potential to reduce traffic accidents. There are various applications of \acs{ADAS}, which are crucial for the safety of the driver and also provide significant conveniences. Some of these applications can be briefly discussed as follows:
 
 \begin{wrapfigure}{r}{0pt}
     \centering
@@ -213,7 +213,7 @@ Cheng et al.\ provide a comprehensive survey on testbench-based Vehicle-in-the-L
 
 Xiong Hu et al.\ present a \ac{VIL} simulation test framework for \acsp{AV}, where an autonomous driving system is evaluated using a virtual environment combined with real vehicle components~\cite{xiong_hu}. Their work emphasizes the synchronization of vehicle dynamics and simulated scenarios and discusses how \ac{VIL} can be used to test autonomous driving functions safely and systematically.
 
-These works clearly show that \ac{VIL} is an important methodology for validating autonomous driving systems. However, they mainly focus on general architectures, testbench setups, and system-level validation. They do not specifically address a software-only \ac{VIL} configuration in a driving simulator like CARLA, where a simulated vehicle is controlled by external code using RGB camera images. Furthermore, the detailed design and evaluation of a single ADAS function such as \ac{LKA}---implemented and tested entirely in such a \ac{VIL} setup---remains less explored. This is where the present thesis contributes.
+These works clearly show that \ac{VIL} is an important methodology for validating autonomous driving systems. However, they mainly focus on general architectures, testbench setups, and system-level validation. They do not specifically address a software-only \ac{VIL} configuration in a driving simulator like CARLA, where a simulated vehicle is controlled by external code using RGB camera images. Furthermore, the detailed design and evaluation of a single \acs{ADAS} function such as \ac{LKA}---implemented and tested entirely in such a \ac{VIL} setup---remains less explored. This is where the present thesis contributes.
 
 \paragraph{Lateral control for \acsp{AV}}
 Lateral control is a key component for lane keeping and path tracking. Kebbati et al.\ provide a technical review of lateral control methods for autonomous wheeled vehicles~\cite{kebbati}. They classify control approaches into model-based and data-driven methods, and discuss their advantages, limitations, and implementation challenges. The survey underlines that lateral control must deal with accuracy, robustness, and real-time constraints, and highlights open challenges for future research.

@@ -18,7 +18,7 @@
 The development and testing of autonomous driving technologies require a robust simulation environment. This environment must accurately model the real world, including vehicles, pedestrians, and various environmental conditions, while also providing comprehensive support for sensor simulation and enabling integration with analytical tools. After a detailed evaluation of existing simulators, including the Waymo Simulator, LGSVL Simulator, Sim4CV, and CARLA Simulator, based on critical features such as graphic quality, the accuracy of the physics engine, sensor simulation capabilities, the simulation of traffic and pedestrians, weather conditions, the ability to simulate different times of day, CARLA Simulator has been identified as the most suitable choice for my research objectives. CARLA provides high-quality graphics with Unreal Engine 4~\cite{unreal_engine_4} and its physics engine accurately models vehicle dynamics and environmental interactions, offering a solid foundation for testing autonomous driving algorithms under various conditions. Moreover, its ability to simulate a wide range of sensors used in \acsp{AV}, such as cameras, LIDAR, radar, and GNSS, with high fidelity is crucial for the development and testing of perception algorithms. CARLA also excels in simulating dynamic traffic scenarios and pedestrian behaviors, facilitating comprehensive testing of autonomous driving systems in complex urban environments. The capability to simulate different weather conditions and times of day is important for assessing the performance of \ac{AV} systems under various environmental conditions. For my research, Python API of CARLA facilitates easy integration with an external controller, providing a seamless workflow for data analysis and algorithm testing. Consequently, CARLA Simulator's advanced graphics, accurate physics engine, extensive sensor simulation capabilities, and effective traffic and pedestrian simulation set it as the ideal choice for my autonomous driving research. Its compatibility with Python API further supports my analytical and development needs, making it the most suitable simulator for my project.
 
 \section{Modeling the Car in the Environment}
-In order to control a vehicle in the simulation, the controller must recognize the vehicle model. For this, a model of the vehicle is needed. Various models can be used when modeling the vehicle. Among these, the most commonly used ones usually offer a good balance between simplicity and accuracy, capable of representing the vehicle's motion dynamics and control systems. In line with the needs of this project, the Dynamic Single-Track (DST) model has been chosen (shown in Figure~\ref{fig:single_track}). The DST model (bicycle model) can be modeled with single-track wheels (one front and one rear wheel). This is equivalent to a model where the right and left sides of a four-wheeled vehicle are considered equal.
+In order to control a vehicle in the simulation, the controller must recognize the vehicle model. For this, a model of the vehicle is needed. Various models can be used when modeling the vehicle. Among these, the most commonly used ones usually offer a good balance between simplicity and accuracy, capable of representing the vehicle's motion dynamics and control systems. In line with the needs of this project, the \ac{DST} model has been chosen (shown in Figure~\ref{fig:single_track}). The \acs{DST} model (bicycle model) can be modeled with single-track wheels (one front and one rear wheel). This is equivalent to a model where the right and left sides of a four-wheeled vehicle are considered equal.
 
 \begin{figure}[htbp]
     \centering
@@ -36,10 +36,10 @@ In order to control a vehicle in the simulation, the controller must recognize t
 
 \noindent\textbf{Vehicle parameters:}
 \begin{itemize}
-    \item CoG: center of gravity
+    \item \acs{CoG}: center of gravity
     \item $m, J$: mass and moment of inertia
-    \item $l_f$: distance CoG -- front wheel center
-    \item $l_r$: distance CoG -- rear wheel center
+    \item $l_f$: distance \acs{CoG} -- front wheel center
+    \item $l_r$: distance \acs{CoG} -- rear wheel center
     \item $c_f, c_r$: front/rear cornering stiffnesses.
 \end{itemize}
 
@@ -52,7 +52,7 @@ In order to control a vehicle in the simulation, the controller must recognize t
 
 \noindent\textbf{Vehicle Dynamic parameters:}
 \begin{itemize}
-    \item $X, Y$: coordinates of the vehicle CoG in an inertial reference frame (shown in Figure~\ref{fig:Vehicle_reference})
+    \item $X, Y$: coordinates of the vehicle \acs{CoG} in an inertial reference frame (shown in Figure~\ref{fig:Vehicle_reference})
     \item $\psi$: yaw angle
     \item $\omega_\psi = \dot{\psi}$: yaw rate
     \item $\vec{v} \equiv V$: velocity vector in the inertial frame
@@ -61,7 +61,7 @@ In order to control a vehicle in the simulation, the controller must recognize t
     \item $a_x$: longitudinal acceleration in the inertial frame.
 \end{itemize}
 
-The state equations of the DST model are:
+The state equations of the \acs{DST} model are:
 \begin{align}
     \dot{X}           &= V_x \cos\psi - V_y \sin\psi \\
     \dot{Y}           &= V_x \sin\psi + V_y \cos\psi \\
